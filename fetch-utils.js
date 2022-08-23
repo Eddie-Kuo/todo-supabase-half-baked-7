@@ -24,6 +24,8 @@ export async function getTodos() {
     return checkError(response);
 }
 
+console.log(getTodos());
+
 export async function completeTodo(id) {
     // find the and update (set complete to true), the todo that matches the correct id
     const response = await client.from('todos').select('complete', true).match({ id }).single();
