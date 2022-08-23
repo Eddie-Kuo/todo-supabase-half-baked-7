@@ -22,34 +22,56 @@ todoForm.addEventListener('submit', async (event) => {
     console.log(response);
     // on submit, create a todo, reset the form, and display the todos
     todoForm.reset();
+    displayTodos();
 });
 
 // create todo state
+// let todos = [];
 
 // add async complete todo handler function
     // call completeTodo
     // swap out todo in array
     // call displayTodos
 
-   
+async function handleComplete(todo) {
+    await completeTodo(todo.id);
+    displayTodos();
+}
+
+
 
 async function displayTodos() {
     // clear the container (.innerHTML = '')
+    todosEl.innerHTML = '';
+
     // display the list of todos, 
           // call render function, pass in state and complete handler function!
           // append to .todos
+    const todos = await getTodos();
+    console.log(todos);
+    for (let todo of todos) {
+        const todoList = renderTodo(todo, handleComplete);
+        todosEl.append(todoList);
+    }
 }
+displayTodos();
 
 // add page load function
     // fetch the todos and store in state
     // call displayTodos
+async function onLoad() {
+    await getTodos();
+    displayTodos();
+}
+onLoad();
+
 
 logoutButton.addEventListener('click', () => {
     logout();
 });
 
 
-deleteButton.addEventListener('click', async() => {
+deleteButton.addEventListener('click', async () => {
     // delete all todos
     // modify state to match
     // re displayTodos
